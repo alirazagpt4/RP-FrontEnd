@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig';
 
 export default function User({ currentUser }) {
   const [users, setUsers] = useState([]);
@@ -20,7 +20,7 @@ export default function User({ currentUser }) {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://194.163.190.100:8080/api/users');
+      const res = await axios.get('/users');
       setUsers(res.data);
     } catch (err) { console.error("Error fetching users", err); }
   };
@@ -48,9 +48,9 @@ export default function User({ currentUser }) {
     setLoading(true);
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:8080/api/users/${editingId}`, formData);
+        await axios.put(`/users/${editingId}`, formData);
       } else {
-        await axios.post('http://localhost:8080/api/users', formData);
+        await axios.post('/users', formData);
       }
       closeModal();
       fetchUsers();
@@ -60,14 +60,14 @@ export default function User({ currentUser }) {
 
   const toggleStatus = async (user) => {
     try {
-      await axios.put(`http://localhost:8080/api/users/${user.id}`, { isActive: !user.isActive });
+      await axios.put(`/users/${user.id}`, { isActive: !user.isActive });
       fetchUsers();
     } catch (err) { alert("Failed to update status"); }
   };
 
   const deleteUser = async (id) => {
     if (window.confirm("🚨 Are you sure? This action cannot be undone.")) {
-      try { await axios.delete(`http://localhost:8080/api/users/${id}`); fetchUsers(); }
+      try { await axios.delete(`/users/${id}`); fetchUsers(); }
       catch (err) { alert("Delete failed"); }
     }
   };
@@ -197,7 +197,7 @@ export default function User({ currentUser }) {
               </div>
 
 
-              {/* Modal ke andar Head assignment dropdown */}
+              
               <div className="col-span-2 space-y-1">
                 <label className="text-sm font-semibold text-gray-600">Assign Heads (Select Multiple)</label>
                 <select

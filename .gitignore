@@ -1,0 +1,7 @@
+# env file 
+.env
+.env.production
+
+# dependency directory
+node_modules/
+dist/

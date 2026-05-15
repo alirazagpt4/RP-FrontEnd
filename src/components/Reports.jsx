@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
 import * as XLSX from 'xlsx';
 import { FaFileExcel, FaFilter, FaSyncAlt } from 'react-icons/fa';
+import axios from '../axiosConfig';
 
 export default function AuditReport({ user: propUser }) {
   const [items, setItems] = useState([]);
@@ -25,8 +25,8 @@ export default function AuditReport({ user: propUser }) {
     setLoading(true);
     try {
       const [itemsRes, usersRes] = await Promise.all([
-        axios.get('http://194.163.190.100:8080/api/items/report', { params: { ...filters } }),
-        axios.get('http://194.163.190.100:8080/api/users')
+        axios.get('/items/report', { params: { ...filters } }),
+        axios.get('/users')
       ]);
       setItems(itemsRes.data?.data || []);
       setAllUsers(usersRes.data || []);
@@ -54,7 +54,6 @@ export default function AuditReport({ user: propUser }) {
     if (!dataList) return [];
     let temp = [...dataList];
     
-    // ================= SECURITY LOGIC BASED ON USER MODEL =================
     const userRole = propUser?.type;
     const currentUserId = String(propUser?.id || propUser?._id);
 

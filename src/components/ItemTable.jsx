@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from '../axiosConfig';
 
 export default function ItemTable({ 
   items, multiSelectMode, selectedIds, toggleSelect, statuses, 
@@ -31,7 +32,14 @@ export default function ItemTable({
                       <input type="checkbox" checked={selectedIds.includes(it.id)} onChange={() => toggleSelect(it.id)} className="w-4 h-4 rounded text-sky-600 cursor-pointer" />
                     </td>
                   )}
-                  <td className="p-4 font-black text-sky-900 text-xs">{it.trackingId}</td>
+                  <td className="p-4">
+  <div className="flex items-center gap-2">
+    <span className="font-black text-sky-900 text-xs">{it.trackingId}</span>
+    {it.attachments && JSON.parse(it.attachments).length > 0 && (
+      <span className="text-[10px] animate-pulse">📎</span>
+    )}
+  </div>
+</td>
                   <td className="p-4 font-bold text-slate-700 text-[11px]">
                     {/* Yahan Color aur Size dono show honge */}
                     {it.articleNo} - <span className="text-sky-600">{it.color}</span> ({it.size})

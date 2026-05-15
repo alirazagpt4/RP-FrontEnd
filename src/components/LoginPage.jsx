@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from '../axiosConfig';
 
 export default function LoginPage({ setUser }) {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -7,7 +7,7 @@ export default function LoginPage({ setUser }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://http://194.163.190.100:8080/api/login", form);
+      const res = await axios.post("/login", form);
       if (res.data.success) {
         setUser(res.data.user);
       }

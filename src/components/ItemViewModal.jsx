@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from '../axiosConfig';
+
 
 const DetailBox = ({ label, value, textColor = "text-slate-800" }) => (
   <div className="flex flex-col gap-0.5">
@@ -126,20 +128,50 @@ export default function ItemViewModal({ item, onClose }) {
                     )
                   })}
                </div>
+{/* Attachments Section - Updated for Images and Videos */}
+<div className="flex flex-wrap gap-4 mt-2">
+  {parsedAttachments.map((file, idx) => {
+    // File type check karne ke liye logic
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+    const fileUrl = `${import.meta.env.VITE_SERVER_URL}/uploads/${file}`;
 
-               {/* Attachments Section */}
-               {parsedAttachments && parsedAttachments.length > 0 && (
-                 <div className="mt-6 border-t border-slate-200 pt-4">
-                   <h4 className="text-[10px] font-black text-slate-400 uppercase mb-3">Attachments / Proofs</h4>
-                   <div className="flex gap-3 overflow-x-auto pb-2">
-                     {parsedAttachments.map((img, idx) => (
-                       <a key={idx} href={`http://localhost:8080/uploads/${img}`} target="_blank" rel="noreferrer" className="shrink-0">
-                         <img src={`http://localhost:8080/uploads/${img}`} alt={`attachment-${idx}`} className="w-20 h-20 object-cover rounded-lg border border-slate-300 hover:border-sky-500 transition-all cursor-zoom-in" />
-                       </a>
-                     ))}
-                   </div>
-                 </div>
-               )}
+    return (
+      <div key={idx} className="group relative flex flex-col items-center gap-2">
+        {/* Link jo naye tab mein file open karega */}
+        <a 
+          href={fileUrl} 
+          target="_blank" 
+          rel="noreferrer" 
+          className="relative block w-32 h-32 border-2 border-slate-200 rounded-xl overflow-hidden hover:border-sky-500 transition-all shadow-sm"
+        >
+          {isVideo ? (
+            /* Agar Video hai to Video Thumbnail show hoga */
+            <div className="relative w-full h-full bg-slate-900 flex items-center justify-center">
+              <video className="w-full h-full object-cover opacity-60">
+                <source src={fileUrl} type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-3xl text-white drop-shadow-md">▶️</span>
+              </div>
+            </div>
+          ) : (
+            /* Agar Image hai to Image show hogi */
+            <img 
+              src={fileUrl} 
+              alt={`attachment-${idx}`} 
+              className="w-full h-full object-cover transition-transform group-hover:scale-110" 
+            />
+          )}
+        </a>
+
+        {/* Chota tag dikhane ke liye ke ye video hai ya pic */}
+        <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-500 tracking-tighter">
+          {isVideo ? "🎥 Video" : "🖼️ Image"}
+        </span>
+      </div>
+    );
+  })}
+</div>
             </div>
           </div>
 

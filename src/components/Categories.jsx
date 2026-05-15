@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { FaPlus, FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import axios from '../axiosConfig';
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);
@@ -9,20 +9,20 @@ export default function CategoryPage() {
   useEffect(() => { fetchCategories(); }, []);
 
   const fetchCategories = async () => {
-    const res = await axios.get('http://194.163.190.100:8080/api/categories/all');
+    const res = await axios.get('/categories/all');
     setCategories(res.data);
   };
 
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!newName) return;
-    await axios.post('http://194.163.190.100:8080/api/categories', { name: newName });
+    await axios.post('/categories', { name: newName });
     setNewName('');
     fetchCategories();
   };
 
   const toggleStatus = async (id, currentStatus) => {
-    await axios.put(`http://194.163.190.100:8080/api/categories/${id}`, { isActive: !currentStatus });
+    await axios.put(`/categories/${id}`, { isActive: !currentStatus });
     fetchCategories();
   };
 

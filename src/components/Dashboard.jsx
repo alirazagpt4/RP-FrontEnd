@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   Cell
 } from 'recharts';
+import axios from '../axiosConfig';
+
 
 export default function Dashboard({ currentUser }) {
   const [items, setItems] = useState([]);
@@ -23,12 +24,12 @@ export default function Dashboard({ currentUser }) {
     if (!currentUser) return;
     try {
       setLoading(true);
-      const itemRes = await axios.get("http://194.163.190.100:8080/api/items", {
+      const itemRes = await axios.get("/items", {
         params: { userId: currentUser.id, type: currentUser.type }
       });
       setItems(itemRes.data.data || []);
 
-      const userRes = await axios.get("http://194.163.190.100:8080/api/users");
+      const userRes = await axios.get("/users");
       setAllUsers(userRes.data || []);
     } catch (err) {
       console.error("Dashboard Fetch Error:", err);
