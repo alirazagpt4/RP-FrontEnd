@@ -15,6 +15,7 @@ export default function ItemTable({
             <tr className="text-[10px] uppercase text-slate-400 font-black">
               {multiSelectMode && <th className="p-4 w-10 text-center">Select</th>}
               <th className="p-4">Tracking</th>
+              <th className="p-4">Store</th>
               <th className="p-4">Article</th>
               <th className="p-4">Return To</th>
               <th className="p-4">Status & Remarks</th>
@@ -40,6 +41,9 @@ export default function ItemTable({
     )}
   </div>
 </td>
+                  <td className="p-4 font-bold text-indigo-700 text-[11px]">
+                    {it.store?.name || it.store?.shortName || `Store ${it.storeId}`}
+                  </td>
                   <td className="p-4 font-bold text-slate-700 text-[11px]">
                     {/* Yahan Color aur Size dono show honge */}
                     {it.articleNo} - <span className="text-sky-600">{it.color}</span> ({it.size})

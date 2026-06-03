@@ -241,7 +241,7 @@ export default function AuditReport({ user: propUser }) {
                 <SortTh label="Type" col="type" sort={sort2} onSort={setSort2} />
                 <SortTh label="WH" col="warehouse" sort={sort2} onSort={setSort2} />
                 <SortTh label="Return To" col="returnto" sort={sort2} onSort={setSort2} />
-                <SortTh label="Amount" col="claimAmount" sort={sort2} onSort={setSort2} />
+                <SortTh label="Courier Charges" col="claimAmount" sort={sort2} onSort={setSort2} />
                 <SortTh label="Rec Store" col="createdAt" sort={sort2} onSort={setSort2} bg="bg-slate-300" />
                 <SortTh label="To WH" col="dispatchToWarehouseDate" sort={sort2} onSort={setSort2} bg="bg-slate-300" />
                 <SortTh label="Rec WH" col="dispatchToProductionDate" sort={sort2} onSort={setSort2} bg="bg-slate-300" />

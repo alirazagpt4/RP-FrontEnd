@@ -11,8 +11,6 @@ const DetailBox = ({ label, value, textColor = "text-slate-800" }) => (
 
 export default function ItemViewModal({ item, onClose }) {
   if (!item) return null;
-
-  // Attachments ko safely parse karna agar wo string/JSON form mein hain
   let parsedAttachments = [];
   try {
     if (item.attachments) {
@@ -48,8 +46,7 @@ export default function ItemViewModal({ item, onClose }) {
           <div className="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-100">
             <h4 className="text-xs font-black text-indigo-600 uppercase mb-4 border-b border-indigo-100 pb-2">Logistics & Store Details</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <DetailBox label="Store Name" value={item.store?.name || `Store ID: ${item.storeId}`} textColor="text-indigo-900" />
-              <DetailBox label="Warehouse" value={item.warehouse} textColor="text-indigo-900" />
+              <DetailBox label="Store Name" value={item.store?.shortName || item.store?.name || `Store ID: ${item.storeId}`} textColor="text-indigo-900" /><DetailBox label="Warehouse" value={item.warehouse} textColor="text-indigo-900" />
               <DetailBox label="Return To" value={item.returnto} textColor="text-indigo-900" />
               <DetailBox label="Receiving Date" value={item.receivingDate} textColor="text-indigo-900" />
             </div>
@@ -85,9 +82,9 @@ export default function ItemViewModal({ item, onClose }) {
              <div className="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
                <h4 className="text-xs font-black text-orange-600 uppercase mb-4 border-b border-orange-100 pb-2">Claim Information</h4>
                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                 <DetailBox label="Claim Amount" value={`Rs. ${item.claimAmount}`} textColor="text-orange-700" />
+                 <DetailBox label="Courier Charges" value={`Rs. ${item.claimAmount}`} textColor="text-orange-700" />
                  <DetailBox label="Claim Status" value={item.claimApproved} textColor={item.claimApproved === 'Approved' ? 'text-green-600' : 'text-rose-600'} />
-                 <DetailBox label="Approved By (ID)" value={item.approvedBy} />
+                 <DetailBox label="Approved By (TM)" value={item.approvedByUser?.name ? `${item.approvedBy} - ${item.approvedByUser.name}` : (item.tmName ? `${item.approvedBy} - ${item.tmName}` : item.approvedBy)} />
                  <DetailBox label="Est. Completion" value={item.estimatedCompletionDate} />
                </div>
              </div>
