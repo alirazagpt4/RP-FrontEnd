@@ -48,7 +48,7 @@ export default function ItemViewModal({ item, onClose }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <DetailBox label="Store Name" value={item.store?.shortName || item.store?.name || `Store ID: ${item.storeId}`} textColor="text-indigo-900" /><DetailBox label="Warehouse" value={item.warehouse} textColor="text-indigo-900" />
               <DetailBox label="Return To" value={item.returnto} textColor="text-indigo-900" />
-              <DetailBox label="Receiving Date" value={item.receivingDate} textColor="text-indigo-900" />
+              <DetailBox label="Store Receiving Date" value={item.receivingDate} textColor="text-indigo-900" />
             </div>
           </div>
 
@@ -80,7 +80,7 @@ export default function ItemViewModal({ item, onClose }) {
           {/* SECTION 4: Claim & Approvals (Only visible if type is Claim or has data) */}
           {(item.type?.toLowerCase() === 'claim' || item.claimAmount) && (
              <div className="bg-orange-50/50 p-5 rounded-2xl border border-orange-100">
-               <h4 className="text-xs font-black text-orange-600 uppercase mb-4 border-b border-orange-100 pb-2">Claim Information</h4>
+               <h4 className="text-xs font-black text-orange-600 uppercase mb-4 border-b border-orange-100 pb-2">Claim / Repair Information</h4>
                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                  <DetailBox label="Courier Charges" value={`Rs. ${item.claimAmount}`} textColor="text-orange-700" />
                  <DetailBox label="Claim Status" value={item.claimApproved} textColor={item.claimApproved === 'Approved' ? 'text-green-600' : 'text-rose-600'} />
