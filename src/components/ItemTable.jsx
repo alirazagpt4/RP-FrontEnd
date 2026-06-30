@@ -26,14 +26,14 @@ export default function ItemTable({
             </tr>
           </thead>
           <tbody>
-            {items.length === 0 ? (
+            {!Array.isArray(items) || items.length === 0 ? (
               <tr>
                 <td colSpan="10" className="p-10 text-center font-bold text-slate-400 border border-black">
                   No records found for this category.
                 </td>
               </tr>
             ) : (
-              items.map((it) => (
+              (Array.isArray(items) ? items : []).map((it) => (
                 <tr 
                   key={it.id} 
                   className={`hover:bg-sky-50/30 transition-colors ${selectedIds.includes(it.id) ? 'bg-sky-50/60' : ''}`}
